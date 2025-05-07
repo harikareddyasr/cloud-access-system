@@ -1,16 +1,13 @@
-from .routes import plans
-
 from fastapi import FastAPI
 from .database import create_db_and_tables
+from .routes import user, plans, subscriptions
 
-app = FastAPI(title="Cloud Service Access Management System")
-app.include_router(plans.router)
-
+app = FastAPI()
 
 @app.on_event("startup")
 async def on_startup():
     await create_db_and_tables()
 
-@app.get("/")
-async def root():
-    return {"message": "Cloud Service Access API is running"}
+app.include_router(user.router)
+app.include_router(plans.router)
+app.include_router(subscriptions.router)
