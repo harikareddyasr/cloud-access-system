@@ -1,20 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from ..schemas.user import UserCreate, UserRead
+from ..database import get_async_session
 from ..crud.user import create_user, get_all_users
-from ..database import async_session
+from ..schemas.user import UserCreate, UserRead
 
-router = APIRouter(prefix="/users", tags=["Users"])
+router = APIRouter()
 
-# Dependency to get DB session
-async def get_db():
-    async with async_session() as session:
-        yield session
-
-@router.post("/", response_model=UserRead)
-async def create_new_user(user: UserCreate, db: AsyncSession = Depends(get_db)):
-    return await create_user(user, db)
-
-@router.get("/", response_model=list[UserRead])
-async def list_all_users(db: AsyncSession = Depends(get_db)):
-    return await get_all_users(db)
+@router.post("/users/", response_model=UserRead)
+async def create(user: UserCreate, db: AsyncSession = Depends(get_async_session)):
+    try:
+        return await create_user(db, user)
+    except Exception as e:
+        print("ERROR CREATING USER:", e)  # <--- Add this line
+        raise HTTPException(status_code=500, detail="Failed to create user")

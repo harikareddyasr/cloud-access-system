@@ -1,16 +1,12 @@
-from pydantic import BaseModel, EmailStr
-from typing import Optional
+from pydantic import BaseModel
 
-class UserBase(BaseModel):
+class UserCreate(BaseModel):
     username: str
-    email: EmailStr
-    role: Optional[str] = "customer"
+    email: str
+    role: str
 
-class UserCreate(UserBase):
-    pass
-
-class UserRead(UserBase):
+class UserRead(UserCreate):
     id: int
 
     class Config:
-        from_attributes = True  # Pydantic v2 equivalent of orm_mode
+        from_attributes = True  

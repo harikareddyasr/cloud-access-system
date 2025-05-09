@@ -1,6 +1,5 @@
-
 from sqlalchemy import Column, Integer, String, JSON
-from sqlalchemy.orm import relationship  # ✅ Add this line
+from sqlalchemy.orm import relationship
 from ..database import Base
 
 class Plan(Base):
@@ -11,5 +10,5 @@ class Plan(Base):
     description = Column(String, nullable=True)
     api_permissions = Column(JSON, nullable=False)
     usage_limits = Column(JSON, nullable=False)
-    subscriptions = relationship("Subscription", back_populates="plan")
 
+    subscriptions = relationship("Subscription", back_populates="plan")
