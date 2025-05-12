@@ -1,3 +1,4 @@
 from .user import User
-from .plan import Plan
 from .subscription import Subscription
+from .plan import Plan
+from .usage_log import UsageLog

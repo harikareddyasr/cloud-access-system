@@ -4,6 +4,7 @@ class UserCreate(BaseModel):
     username: str
     email: str
     role: str
+    password: str
 
 class UserRead(UserCreate):
     id: int
