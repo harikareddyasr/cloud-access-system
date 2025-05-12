@@ -7,7 +7,7 @@ class UsageLog(Base):
     __tablename__ = "usage_logs"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)  # ✅ Make sure this matches
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)  
     api_name = Column(String, nullable=False)
     count = Column(Integer, default=1)
     timestamp = Column(DateTime, default=datetime.utcnow)
