@@ -1,131 +1,105 @@
-Cloud Service Access Management System
+# Cloud Service Access Management System
 
-Overview
+## Overview
 
 This is a backend system built with FastAPI to manage access control for cloud APIs based on user subscriptions. The system supports role-based access control, where admins can define subscription plans, assign permissions, and monitor usage. Customers (users) can subscribe to plans and access services as permitted.
 
-# Features
+## Features
 
-Role-Based Access Control
+### Role-Based Access Control
 
-Admins can create and manage subscription plans.
+- Admins can create and manage subscription plans.
+- Admins can add or update permissions linked to APIs.
+- Customers can subscribe to plans and access APIs accordingly.
 
-Admins can add or update permissions linked to APIs.
+### Subscription Plan Management
 
-Customers can subscribe to plans and access APIs accordingly.
+- Create Plan: `POST /plans`
+- Update Plan: `PUT /plans/{plan_id}`
+- Delete Plan: `DELETE /plans/{plan_id}`
 
-Subscription Plan Management
+### Permission Management
 
-Create Plan: POST /plans
+- Add Permission: `POST /permissions`
+- Update Permission: `PUT /permissions/{permission_id}`
+- Delete Permission: `DELETE /permissions/{permission_id}`
 
-Update Plan: PUT /plans/{plan_id}
+### User Subscription Handling
 
-Delete Plan: DELETE /plans/{plan_id}
+- Subscribe to a Plan: `POST /subscriptions`
+- Assign/Modify User Plan (Admin): `PUT /subscriptions/{user_id}`
+- Check Current User Usage: `GET /usage/limit`
 
-Permission Management
+### Access Control and Usage Tracking (Cloud APIs)
 
-Add Permission: POST /permissions
+- `GET /cloud/api1/{user_id}`
+- `GET /cloud/api2/{user_id}`
+- `GET /cloud/api3/{user_id}`
+- `GET /cloud/api4/{user_id}`
+- `GET /cloud/api5/{user_id}`
+- `GET /cloud/api6/{user_id}`
 
-Update Permission: PUT /permissions/{permission_id}
+The system:
 
-Delete Permission: DELETE /permissions/{permission_id}
+- Automatically checks access permissions and usage limits
+- Tracks number of API calls per user
+- Denies access if user exceeds their subscription limits
 
-User Subscription Handling
+## Tech Stack
 
-Subscribe to a Plan: POST /subscriptions
+- Python 3.13
+- FastAPI
+- SQLite with aiosqlite
+- SQLAlchemy (Async ORM)
+- Pydantic
+- JWT for authentication
 
-Assign/Modify User Plan (Admin): PUT /subscriptions/{user_id}
-
-Check Current User Usage: GET /usage/limit
-
-Access Control and Usage Tracking
-Cloud APIs (Managed Services):
-
-GET /cloud/api1/{user_id}
-
-GET /cloud/api2/{user_id}
-
-GET /cloud/api3/{user_id}
-
-GET /cloud/api4/{user_id}
-
-GET /cloud/api5/{user_id}
-
-GET /cloud/api6/{user_id}
-
-Automatically checks access permissions and usage limits
-
-Tracks number of API calls per user
-
-Denies access if user exceeds their subscription limits
-
-Tech Stack
-
-Python 3.13
-
-FastAPI
-
-SQLite with aiosqlite
-
-SQLAlchemy (Async ORM)
-
-Pydantic
-
-JWT for authentication
-
-Project Structure
-
+## Project Structure
 app/
-├── main.py FastAPI entry point
-├── database.py Async DB engine and session
-├── models/ SQLAlchemy models
-├── schemas/ Pydantic schemas
-├── routes/ All API route handlers
-├── utils/ Auth and dependencies
+├── main.py # FastAPI entry point
+├── database.py # Async DB engine and session
+├── models/ # SQLAlchemy models
+├── schemas/ # Pydantic schemas
+├── routes/ # All API route handlers
+├── utils/ # Auth and dependencies
 
-Setup Instructions
+## Setup Instructions
 
-Clone the Repository
-git clone https://github.com/your-username/cloud-access-system.git
-cd cloud-access-system
+1. Clone the Repository
+   git clone https://github.com/your-username/cloud-access-system.git
+   cd cloud-access-system
+2. Create Virtual Environment
+   python3 -m venv venv
+   source venv/bin/activate
+3. Install Requirements
+   pip install -r requirements.txt
+4. Run the Application
+   uvicorn app.main:app --reload
 
-Create Virtual Environment
-python3 -m venv venv
-source venv/bin/activate
+5. Access API Docs
 
-Install Requirements
-pip install -r requirements.txt
+Visit: `http://127.0.0.1:8000/docs`
 
-Run the Application
-uvicorn app.main:app --reload
+## Team Members
 
-Access API Docs
-Visit http://127.0.0.1:8000/docs to explore Swagger UI with full API details
+- Yashwanth Reddy Mallareddygari  
+- Harika Animireddy Gari  
+- Snigdha Aravapalli
 
-Team Members
+## Deliverables
 
-Yashwanth Reddy Mallareddygari
-Harika Animireddy Gari
-snigdha Aravapalli
+- All core features implemented
+- Role-based authentication and authorization
+- Subscription and permission management
+- Usage tracking and limit enforcement
+- REST API with JWT security
+- Swagger documentation via `/docs`
+- Final video walkthrough (included in repo if applicable)
 
-# Deliverables
+## Notes
 
-All core features implemented
+- All APIs require JWT authentication.
+- Admin credentials should be seeded manually or registered first with the admin role.
 
-Role-based authentication and authorization
 
-Subscription and permission management
 
-Usage tracking and limit enforcement
-
-REST API with JWT security
-
-Swagger documentation via /docs
-
-Final video walkthrough (included in repo if applicable)
-
-# Notes
-
-All APIs require JWT authentication.
-
-Admin credentials should be seeded manually or registered first with the admin role.
