@@ -1,95 +1,131 @@
-# ☁️ Cloud Service Access Management System
+Cloud Service Access Management System
 
-This is a backend system developed using **FastAPI** that manages access to cloud services based on user subscription plans. It supports **JWT authentication**, **role-based access (admin vs. user)**, and **API usage tracking**.
+Overview
 
----
+This is a backend system built with FastAPI to manage access control for cloud APIs based on user subscriptions. The system supports role-based access control, where admins can define subscription plans, assign permissions, and monitor usage. Customers (users) can subscribe to plans and access services as permitted.
 
-## 🚀 Features
+# Features
 
-- 🔐 JWT Authentication and Authorization
-- 👥 Role-based access control (Admin/Customer)
-- 📦 Subscription Plans with API Access Limits
-- 📊 Usage Logging for API Calls
-- 🛠️ Admin-only API for Plan Management
-- ✅ Interactive Swagger UI at `/docs`
+Role-Based Access Control
 
----
+Admins can create and manage subscription plans.
 
-## 🛠️ Tech Stack
+Admins can add or update permissions linked to APIs.
 
-- **FastAPI** – Web framework
-- **SQLite + SQLAlchemy** – Async DB and ORM
-- **Pydantic** – Data validation
-- **JWT** – Secure token authentication
-- **Uvicorn** – ASGI server
+Customers can subscribe to plans and access APIs accordingly.
 
----
+Subscription Plan Management
 
-## 📂 Project Structure
+Create Plan: POST /plans
+
+Update Plan: PUT /plans/{plan_id}
+
+Delete Plan: DELETE /plans/{plan_id}
+
+Permission Management
+
+Add Permission: POST /permissions
+
+Update Permission: PUT /permissions/{permission_id}
+
+Delete Permission: DELETE /permissions/{permission_id}
+
+User Subscription Handling
+
+Subscribe to a Plan: POST /subscriptions
+
+Assign/Modify User Plan (Admin): PUT /subscriptions/{user_id}
+
+Check Current User Usage: GET /usage/limit
+
+Access Control and Usage Tracking
+Cloud APIs (Managed Services):
+
+GET /cloud/api1/{user_id}
+
+GET /cloud/api2/{user_id}
+
+GET /cloud/api3/{user_id}
+
+GET /cloud/api4/{user_id}
+
+GET /cloud/api5/{user_id}
+
+GET /cloud/api6/{user_id}
+
+Automatically checks access permissions and usage limits
+
+Tracks number of API calls per user
+
+Denies access if user exceeds their subscription limits
+
+Tech Stack
+
+Python 3.13
+
+FastAPI
+
+SQLite with aiosqlite
+
+SQLAlchemy (Async ORM)
+
+Pydantic
+
+JWT for authentication
+
+Project Structure
 
 app/
-├── crud/
-├── database.py
-├── main.py
-├── models/
-├── routes/
-├── schemas/
-├── utils/
-└── cloudaccess.db
+├── main.py FastAPI entry point
+├── database.py Async DB engine and session
+├── models/ SQLAlchemy models
+├── schemas/ Pydantic schemas
+├── routes/ All API route handlers
+├── utils/ Auth and dependencies
 
-## 🧪 How to Run
+Setup Instructions
 
-1. Clone the Project
-   ``` git clone https://github.com/yourusername/cloud-access-system.git 
-   cd cloud-access-system ```
-2. create and activate virtual environment
-   ```python3 -m venv env 
-   source env/bin/activate  # or on Windows: env\Scripts\activate ```
-3. Install dependencies
-   ```pip install -r requirements.txt```
-4. Run the app
-  ``` uvicorn app.main:app --reload```
+Clone the Repository
+git clone https://github.com/your-username/cloud-access-system.git
+cd cloud-access-system
 
+Create Virtual Environment
+python3 -m venv venv
+source venv/bin/activate
 
-## 🔐 Authentication Flow
+Install Requirements
+pip install -r requirements.txt
 
-    Register a user (POST /users/)
-    Login to get JWT Token (POST /token)
-    Authorize via Swagger UI (Click "Authorize" and paste Bearer <token>)
+Run the Application
+uvicorn app.main:app --reload
 
-## 📦 Admin Access
+Access API Docs
+Visit http://127.0.0.1:8000/docs to explore Swagger UI with full API details
 
-    Only role: admin users can:
+Team Members
 
-    View /admin/dashboard
-    Manage subscription plans via future endpoints
+Yashwanth Reddy Mallareddygari
+Harika Animireddy Gari
+snigdha Aravapalli
 
-## 🔄 Sample Endpoints
+# Deliverables
 
-## Endpoint	                     Method	     Access	        Description
-|  /token	                     POST	     Public	        Login and receive JWT token
-|  /users/	                     POST	     Public	        Create a user
-|  /plans/	                     POST	     Admin	        Create a plan
-|  /subscriptions/	             POST	     Authenticated	Subscribe to a plan
-|  /cloud/api1 to /cloud/api6	 GET	     Authenticated	API access check + usage
+All core features implemented
 
-## 📸 Swagger UI
+Role-based authentication and authorization
 
-You can interact with all the APIs via http://127.0.0.1:8000/docs
+Subscription and permission management
 
-## 📌 Notes
+Usage tracking and limit enforcement
 
-Usage limits for APIs are tracked per user and enforced automatically.
-Tokens expire in 30 minutes by default.
-You must include Bearer <your_token_here> in headers to access protected routes.
+REST API with JWT security
 
-## 🧾 License
+Swagger documentation via /docs
 
-This project is for academic use only. You may modify and use it for educational or learning purposes.
+Final video walkthrough (included in repo if applicable)
 
-👤 Author
+# Notes
 
-Harika Animireddygari
-Graduate Student – CSUF
-GitHub: https://github.com/harikareddyasr
+All APIs require JWT authentication.
 
+Admin credentials should be seeded manually or registered first with the admin role.
